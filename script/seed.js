@@ -1,18 +1,46 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Activity} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+      firstName: 'Cody',
+      lastName: 'Dog',
+      isAdmin: true
+    }),
+    User.create({
+      email: 'murphy@email.com',
+      password: '123',
+      firstName: 'Murphy',
+      lastName: 'Dog'
+    })
+  ])
+
+  const activities = await Promise.all([
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Educational Video',
+      weekday: 'tuesday'
+    }),
+    Activity.create({
+      activityType: 'activity',
+      content:
+        'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
+      title: 'Some Activity',
+      weekday: 'monday'
+    })
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${activities.length} activities`)
   console.log(`seeded successfully`)
 }
 
