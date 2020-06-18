@@ -2,6 +2,14 @@ const router = require('express').Router()
 const {Activity} = require('../db/models')
 module.exports = router
 
+const checkAdmin = (req, res, next) => {
+  if (req.user.isAdmin) {
+    next()
+  } else {
+    res.status(401).end()
+  }
+}
+
 router.get('/', async (req, res, next) => {
   try {
     let activities = await Activity.findAll()
@@ -11,7 +19,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', checkAdmin, async (req, res, next) => {
   try {
     const newActivity = {
       type: req.body.type,
@@ -28,7 +36,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:activityId', async (req, res, next) => {
+router.put('/:activityId', checkAdmin, async (req, res, next) => {
   try {
     const updatedActivity = {
       ...(req.body.title && {title: req.body.title}),
@@ -44,7 +52,7 @@ router.put('/:activityId', async (req, res, next) => {
   }
 })
 
-router.delete('/:activityId', async (req, res, next) => {
+router.delete('/:activityId', checkAdmin, async (req, res, next) => {
   try {
     await Activity.destroy({
       where: {

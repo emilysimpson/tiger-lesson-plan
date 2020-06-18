@@ -34,7 +34,58 @@ async function seed() {
       activityType: 'activity',
       content:
         'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
-      title: 'Some Activity',
+      title: 'Fun Activity',
+      weekday: 'tuesday'
+    }),
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Fun Video',
+      weekday: 'wednesday'
+    }),
+    Activity.create({
+      activityType: 'activity',
+      content:
+        'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
+      title: 'Fun Activity',
+      weekday: 'thursday'
+    }),
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Video',
+      weekday: 'thursday'
+    }),
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Educational Video',
+      weekday: 'thursday'
+    }),
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Fun Video',
+      weekday: 'friday'
+    }),
+    Activity.create({
+      activityType: 'activity',
+      content:
+        'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
+      title: 'Educational Activity',
+      weekday: 'monday'
+    }),
+    Activity.create({
+      activityType: 'video',
+      url: 'http://youtube.com',
+      title: 'Video',
+      weekday: 'monday'
+    }),
+    Activity.create({
+      activityType: 'activity',
+      content:
+        'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
+      title: 'Fun Activity',
       weekday: 'monday'
     })
   ])

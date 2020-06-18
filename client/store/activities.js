@@ -12,7 +12,10 @@ const defaultActivities = {}
 /** ACTION CREATORS */
 const setActivities = activities => ({type: SET_ACTIVITIES, activities})
 const addActivity = activity => ({type: ADD_ACTIVITY, activity})
-const removeActivity = activityId => ({type: REMOVE_ACTIVITY, activityId})
+const removeActivity = activityId => ({
+  type: REMOVE_ACTIVITY,
+  activityId
+})
 
 /** THUNK CREATORS */
 export const fetchActivities = () => {
@@ -51,7 +54,7 @@ export const deleteActivity = activityId => {
 }
 
 /** REDUCER */
-export default (activitiesReducer = (state = defaultActivities, action) => {
+const activitiesReducer = (state = defaultActivities, action) => {
   switch (action.type) {
     case SET_ACTIVITIES:
       return action.activities
@@ -59,7 +62,10 @@ export default (activitiesReducer = (state = defaultActivities, action) => {
       return action.activity
     case REMOVE_ACTIVITY:
       return state.filter(activity => activity.id !== action.activityId)
+
     default:
       return state
   }
-})
+}
+
+export default activitiesReducer
