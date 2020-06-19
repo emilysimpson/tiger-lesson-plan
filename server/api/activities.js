@@ -19,10 +19,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:activityId', async (req, res, next) => {
+  try {
+    let activity = await Activity.findByPk(req.params.activityId)
+    res.json(activity)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', checkAdmin, async (req, res, next) => {
   try {
     const newActivity = {
-      type: req.body.type,
+      activityType: req.body.activityType,
       title: req.body.title,
       weekday: req.body.weekday,
       ...(req.body.url && {url: req.body.url}),

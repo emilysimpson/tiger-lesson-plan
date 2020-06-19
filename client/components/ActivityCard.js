@@ -5,11 +5,31 @@ import {deleteActivity} from '../store/activities'
 
 const ActivityCard = props => {
   const {activity, user} = props
+  let youtubeCode
+  if (activity.url) {
+    if (activity.url.length) {
+      youtubeCode = activity.url.slice(activity.url.indexOf('=') + 1)
+    }
+  }
   return (
     <div>
-      <h4>{activity.title}</h4>
-      {activity.content && <p>{activity.content}</p>}
-      {activity.url && <a href={activity.url}>{activity.title}</a>}
+      <Link to={`/activity/${activity.id}`}>
+        <h4>{activity.title}</h4>
+      </Link>
+      {activity.imageRef && (
+        <img
+          width="300px"
+          src={`https://lesson-plan-uploads.s3.amazonaws.com/${
+            activity.imageRef
+          }`}
+        />
+      )}
+      {activity.url && (
+        <img
+          width="300px"
+          src={`http://img.youtube.com/vi/${youtubeCode}/0.jpg`}
+        />
+      )}
       {user.isAdmin && (
         <button
           onClick={() => props.deleteActivity(activity.id, activity.weekday)}

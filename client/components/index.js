@@ -7,4 +7,7 @@ export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {default as ActivityView} from './ActivityView'
 export {default as ActivityCard} from './ActivityCard'
+export {default as AddActivity} from './AddActivity'
+export {default as SingleActivity} from './SingleActivity'
+
 export {Login, Signup} from './auth-form'

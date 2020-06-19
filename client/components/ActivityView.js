@@ -31,6 +31,9 @@ class ActivityView extends React.Component {
         ) : (
           <p>No activities</p>
         )}
+        {this.props.user.isAdmin && (
+          <Link to="/add-activity/monday">Add New</Link>
+        )}
         <hr />
 
         <h3>Tuesday</h3>
@@ -41,6 +44,10 @@ class ActivityView extends React.Component {
         ) : (
           <p>No activities</p>
         )}
+        {this.props.user.isAdmin && (
+          <Link to="/add-activity/tuesday">Add New</Link>
+        )}
+
         <hr />
 
         <h3>Wednesday</h3>
@@ -51,6 +58,10 @@ class ActivityView extends React.Component {
         ) : (
           <p>No activities</p>
         )}
+        {this.props.user.isAdmin && (
+          <Link to="/add-activity/wednesday">Add New</Link>
+        )}
+
         <hr />
 
         <h3>Thursday</h3>
@@ -61,6 +72,10 @@ class ActivityView extends React.Component {
         ) : (
           <p>No activities</p>
         )}
+        {this.props.user.isAdmin && (
+          <Link to="/add-activity/thursday">Add New</Link>
+        )}
+
         <hr />
         <h3>Friday</h3>
         {activities.friday ? (
@@ -69,6 +84,9 @@ class ActivityView extends React.Component {
           ))
         ) : (
           <p>No activities</p>
+        )}
+        {this.props.user.isAdmin && (
+          <Link to="/add-activity/friday">Add New</Link>
         )}
       </div>
     )

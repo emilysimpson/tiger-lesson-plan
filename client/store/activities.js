@@ -36,6 +36,7 @@ export const newActivity = activity => {
       const res = await axios.post('/api/activities', activity)
       const newActivity = res.data
       dispatch(addActivity(newActivity))
+      history.push('/')
     } catch (error) {
       console.log(error)
     }

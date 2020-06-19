@@ -26,12 +26,13 @@ async function seed() {
   const activities = await Promise.all([
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Educational Video',
       weekday: 'tuesday'
     }),
     Activity.create({
       activityType: 'activity',
+      imageRef: 'bucketFolder/1592508029515-lg.png',
       content:
         'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
       title: 'Fun Activity',
@@ -39,12 +40,13 @@ async function seed() {
     }),
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Fun Video',
       weekday: 'wednesday'
     }),
     Activity.create({
       activityType: 'activity',
+      imageRef: 'bucketFolder/1592508029515-lg.png',
       content:
         'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
       title: 'Fun Activity',
@@ -52,24 +54,25 @@ async function seed() {
     }),
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Video',
       weekday: 'thursday'
     }),
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Educational Video',
       weekday: 'thursday'
     }),
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Fun Video',
       weekday: 'friday'
     }),
     Activity.create({
       activityType: 'activity',
+      imageRef: 'bucketFolder/1592508029515-lg.png',
       content:
         'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
       title: 'Educational Activity',
@@ -77,12 +80,13 @@ async function seed() {
     }),
     Activity.create({
       activityType: 'video',
-      url: 'http://youtube.com',
+      url: 'https://www.youtube.com/watch?v=DtMuKjvhz5g',
       title: 'Video',
       weekday: 'monday'
     }),
     Activity.create({
       activityType: 'activity',
+      imageRef: 'bucketFolder/1592508029515-lg.png',
       content:
         'Materials: 1. this 2. something else 3. another thing Process: Take the thing and add another thing to it.',
       title: 'Fun Activity',
