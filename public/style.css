@@ -2,22 +2,42 @@ body {
   font-family: sans-serif;
   white-space: pre-wrap;
   overflow-wrap: break-word;
+  background: url('Background-1.svg'), url('Background-2.svg');
+  background-size: 30vw, 40vw;
+  background-position: 40px -70px, 110% 120%;
+  background-attachment: fixed;
+  background-repeat: no-repeat, no-repeat;
+}
+@media only screen and (min-width: 600px) {
+  body {
+    padding-left: 180px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    padding-left: auto;
+    background: url('Background-1.svg'), url('Background-2.svg');
+    background-size: 40vw, 60vw;
+    background-position: -20px -30px, right bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat, no-repeat;
+  }
 }
 
 a {
   text-decoration: none;
+  color: inherit;
+}
+a:visited {
+  text-decoration: none;
+  color: inherit;
 }
 
 label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
-}
-
-form div {
-  margin: 1em;
-  display: inline-block;
+hr {
+  border: 0.25pt solid rgba(74, 74, 74, 1);
 }

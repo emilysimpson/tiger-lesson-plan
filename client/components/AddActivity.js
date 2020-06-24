@@ -1,8 +1,34 @@
 import React from 'react'
 import axios from 'axios'
+import {
+  Input,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  Container,
+  FormControl,
+  Grid,
+  Button,
+  LinearProgress,
+  Typography
+} from '@material-ui/core'
+import {withStyles} from '@material-ui/core/styles'
+import MUIRichTextEditor from 'mui-rte'
+import {stateToHTML} from 'draft-js-export-html'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import {newActivity} from '../store/activities'
+import theme from '../UI-utils/theme'
+
+const styles = theme => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '50ch'
+    }
+  }
+})
 
 class AddActivity extends React.Component {
   constructor() {
@@ -24,11 +50,9 @@ class AddActivity extends React.Component {
     this.setState({weekday: weekday})
   }
 
-  handleFileUpload = event => {
-    this.setState({file: event.target.files})
-  }
-
   submitFile = async event => {
+    console.log(event.target.files)
+    await this.setState({file: event.target.files})
     try {
       event.preventDefault()
       this.setState({loading: true})
@@ -50,6 +74,12 @@ class AddActivity extends React.Component {
     this.setState({[evt.target.name]: evt.target.value})
   }
 
+  handleRTEChange = data => {
+    this.setState({
+      content: stateToHTML(data.getCurrentContent()).replace('<p><br></p>', '')
+    })
+  }
+
   handleSubmit = evt => {
     evt.preventDefault()
     const activity = {
@@ -65,26 +95,29 @@ class AddActivity extends React.Component {
 
   render() {
     const {weekday} = this.props.match.params
+    const classes = this.props.classes
     return (
-      <div>
+      <Container className={classes.root} style={{margin: '5px'}}>
+        <Typography variant="h6">Add activity</Typography>
         {!this.state.activityType ? (
-          <div>
-            <label htmlFor="activityType">Activity type:</label>
-            <select
-              name="activityType"
-              id="activityType"
-              onChange={this.handleChange}
-            >
-              <option>Select one</option>
-              <option value="activity">Project</option>
-              <option value="video">Video</option>
-            </select>
-          </div>
+          <Grid item xs={12}>
+            <FormControl style={{minWidth: '220px'}}>
+              <InputLabel htmlFor="activityType">Activity type</InputLabel>
+              <Select
+                name="activityType"
+                id="activityType"
+                onChange={this.handleChange}
+              >
+                <MenuItem>Select one</MenuItem>
+                <MenuItem value="activity">Project</MenuItem>
+                <MenuItem value="video">Video</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         ) : (
-          <div>
-            <h3>Add activity</h3>
+          <>
             {this.state.loading ? (
-              <p>Loading...</p>
+              <LinearProgress color="secondary" style={{width: '50ch'}} />
             ) : this.state.imageRef ? (
               <img
                 src={`https://lesson-plan-uploads.s3.amazonaws.com/${
@@ -93,48 +126,97 @@ class AddActivity extends React.Component {
                 width="200px"
               />
             ) : (
-              <form onSubmit={this.submitFile}>
-                <label htmlFor="upload">Upload image</label>
-                <input
-                  label="upload"
-                  type="file"
-                  onChange={this.handleFileUpload}
-                />
-                <button type="submit">Upload</button>
-              </form>
+              <>
+                {this.state.activityType === 'activity' && (
+                  <>
+                    <input
+                      style={{display: 'none'}}
+                      id="text-button-file"
+                      accept="image/*"
+                      label="upload"
+                      type="file"
+                      onChange={this.submitFile}
+                    />
+                    <label htmlFor="text-button-file">
+                      <Button component="span">Upload Image</Button>
+                    </label>
+                  </>
+                )}
+              </>
             )}
             <form onSubmit={this.handleSubmit}>
-              <label htmlFor="title">Title:</label>
-              <input type="text" name="title" onChange={this.handleChange} />
-              {this.state.activityType === 'video' && (
-                <>
-                  <label htmlFor="url">URL:</label>
-                  <input type="text" name="url" onChange={this.handleChange} />
-                </>
-              )}
-              <label htmlFor="content">Information:</label>
-              <textarea
-                type="text"
-                name="content"
-                onChange={this.handleChange}
-              />
-              <label htmlFor="weekday">Weekday:</label>
-              <select
-                name="weekday"
-                defaultValue={weekday}
-                onChange={this.handleChange}
-              >
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-              </select>
-              <button type="submit">Submit</button>
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    id="standard-required"
+                    helperText="Required"
+                    label="Title"
+                    name="title"
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+                {this.state.activityType === 'video' && (
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      helperText="Required"
+                      label="URL"
+                      type="text"
+                      name="url"
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <MUIRichTextEditor
+                    label="Content"
+                    name="content"
+                    onChange={this.handleRTEChange}
+                    style={{height: '500px'}}
+                    controls={[
+                      'bold',
+                      'italic',
+                      'underline',
+                      'quote',
+                      'clear',
+                      'numberList',
+                      'bulletList'
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{paddingLeft: '30px'}}>
+                  <FormControl style={{minWidth: '220px'}}>
+                    <InputLabel htmlFor="weekday">Weekday</InputLabel>
+                    <Select
+                      name="weekday"
+                      defaultValue={weekday}
+                      onChange={this.handleChange}
+                    >
+                      <MenuItem value="monday">Monday</MenuItem>
+                      <MenuItem value="tuesday">Tuesday</MenuItem>
+                      <MenuItem value="wednesday">Wednesday</MenuItem>
+                      <MenuItem value="thursday">Thursday</MenuItem>
+                      <MenuItem value="friday">Friday</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} style={{paddingLeft: '30px'}}>
+                  {!this.state.title.length || this.state.loading ? (
+                    <Button variant="contained" disabled>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button variant="contained" color="primary" type="submit">
+                      Submit
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
             </form>
-          </div>
+          </>
         )}
-      </div>
+      </Container>
     )
   }
 }
@@ -145,4 +227,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(null, mapDispatch)(AddActivity)
+export default withStyles(styles)(connect(null, mapDispatch)(AddActivity))

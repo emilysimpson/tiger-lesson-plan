@@ -7,7 +7,8 @@ import {
   Signup,
   ActivityView,
   AddActivity,
-  SingleActivity
+  SingleActivity,
+  UpdateActivity
 } from './components'
 import {me} from './store'
 
@@ -20,24 +21,42 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn, isAdmin} = this.props
-
+    const {isLoggedIn, isAdmin, location, width} = this.props
+    let background = location.state && location.state.background
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        {isLoggedIn && (
+        {!isLoggedIn && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route exact path="/" component={ActivityView} />
-            <Route path="/activity/:activityId" component={SingleActivity} />
-            {isAdmin && (
-              <Switch>
-                <Route path="/add-activity/:weekday" component={AddActivity} />
-              </Switch>
-            )}
+            <Route exact path="/" component={Login} />
+            <Route path="/signup" component={Signup} />
           </Switch>
+        )}
+        {isLoggedIn && (
+          <>
+            <Switch location={background || location}>
+              {/* Routes placed here are only available after logging in */}
+              <Route exact path="/" component={ActivityView} />
+              <Route path="/activity/:activityId" component={SingleActivity} />
+
+              {isAdmin && (
+                <Switch>
+                  <Route
+                    path="/add-activity/:weekday"
+                    component={AddActivity}
+                  />
+                  <Route
+                    path="/update-activity/:activityId"
+                    component={UpdateActivity}
+                  />
+                </Switch>
+              )}
+            </Switch>
+
+            {background && (
+              <Route path="/activity/:activityId" component={SingleActivity} />
+            )}
+          </>
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
