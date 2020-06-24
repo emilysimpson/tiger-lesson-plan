@@ -50,7 +50,7 @@ class SingleActivity extends React.Component {
               />
             )}
 
-            <Typography variant="body1">{selectedActivity.content}</Typography>
+            <Markup content={selectedActivity.content} />
 
             {isAdmin && (
               <Grid container style={{paddingTop: '20px'}}>

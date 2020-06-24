@@ -28,7 +28,7 @@ const ActivityCard = props => {
     }
   }
   return (
-    <Card style={{textAlign: 'left'}}>
+    <Card style={{textAlign: 'center'}}>
       <Link to={linkLocation}>
         <CardActionArea>
           {activity.imageRef && (
@@ -47,10 +47,22 @@ const ActivityCard = props => {
               title={activity.title}
             />
           )}
-
-          <Typography gutterBottom variant="body1" style={{padding: '5px'}}>
-            {activity.title}
-          </Typography>
+          {!activity.url && !activity.imageRef ? (
+            <Typography
+              variant="body1"
+              style={{
+                padding: '15px',
+                paddingTop: '30px',
+                paddingBottom: '30px'
+              }}
+            >
+              {activity.title}
+            </Typography>
+          ) : (
+            <Typography variant="body1" style={{padding: '15px'}}>
+              {activity.title}
+            </Typography>
+          )}
         </CardActionArea>
       </Link>
       {user.isAdmin && (

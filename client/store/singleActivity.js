@@ -23,7 +23,7 @@ export const updateActivity = activity => {
       const res = await axios.put(`/api/activities/${activity.id}`, activity)
       const updatedActivity = res.data
       dispatch(editActivity(updatedActivity))
-      history.push(`/activity/${activity.id}`)
+      history.push('/')
     } catch (error) {
       console.log(error)
     }

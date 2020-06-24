@@ -105,7 +105,7 @@ const Navbar = ({handleClick, isLoggedIn, classes, window}) => {
               variant="h3"
               noWrap
               gutterBottom
-              style={{marginBottom: '30px'}}
+              style={{marginBottom: '30px', marginTop: '30px'}}
             >
               Tiger Lesson Plan
             </Typography>

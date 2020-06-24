@@ -41,6 +41,20 @@ class UpdateActivity extends React.Component {
     }
   }
 
+  componentDidMount() {
+    let content
+    if (this.props.selectedActivity && this.props.selectedActivity.content) {
+      const contentHTML = convertFromHTML(this.props.selectedActivity.content)
+      const state = ContentState.createFromBlockArray(
+        contentHTML.contentBlocks,
+        contentHTML.entityMap
+      )
+      content = JSON.stringify(convertToRaw(state))
+    }
+    this.setState({RTEcontent: content})
+    this.setState({title: this.props.selectedActivity.title})
+  }
+
   handleChange = evt => {
     this.setState({[evt.target.name]: evt.target.value})
   }
@@ -66,15 +80,7 @@ class UpdateActivity extends React.Component {
 
   render() {
     const {selectedActivity, classes} = this.props
-    let content
-    if (selectedActivity && selectedActivity.content) {
-      const contentHTML = convertFromHTML(this.props.selectedActivity.content)
-      const state = ContentState.createFromBlockArray(
-        contentHTML.contentBlocks,
-        contentHTML.entityMap
-      )
-      content = JSON.stringify(convertToRaw(state))
-    }
+
     return (
       <Container className={classes.root} style={{margin: '5px'}}>
         <Typography variant="h6">Edit activity</Typography>
@@ -92,19 +98,10 @@ class UpdateActivity extends React.Component {
               />
             </Grid>
             <Grid item xs={12}>
-              {/* <TextField
-                label="Content"
-                multiline
-                rows={7}
-                variant="filled"
-                type="text"
-                name="content"
-                onChange={this.handleChange}
-                defaultValue={this.props.selectedActivity.content}
-              /> */}
               <MUIRichTextEditor
                 label="Content"
                 name="content"
+                defaultValue={this.state.RTEcontent}
                 onChange={this.handleRTEChange}
                 style={{height: '500px'}}
                 controls={[

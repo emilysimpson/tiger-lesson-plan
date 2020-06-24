@@ -1,6 +1,5 @@
 body {
   font-family: sans-serif;
-  white-space: pre-wrap;
   overflow-wrap: break-word;
   background: url('Background-1.svg'), url('Background-2.svg');
   background-size: 30vw, 40vw;

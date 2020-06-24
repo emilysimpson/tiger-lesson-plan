@@ -27,19 +27,23 @@ const uploadFile = (buffer, name, type) => {
 }
 
 router.post('/', (req, res, next) => {
-  const form = new multiparty.Form()
-  form.parse(req, async (err, fields, files) => {
-    if (err) throw new Error(err)
-    try {
-      const path = files.file[0].path
-      const buffer = fs.readFileSync(path)
-      const type = await fileType.fromBuffer(buffer)
-      const timestamp = Date.now().toString()
-      const fileName = `bucketFolder/${timestamp}-lg`
-      const data = await uploadFile(buffer, fileName, type)
-      return res.status(200).send(data.Key)
-    } catch (err) {
-      next(err)
-    }
-  })
+  if (req.user.dataValues.isAdmin) {
+    const form = new multiparty.Form()
+    form.parse(req, async (err, fields, files) => {
+      if (err) throw new Error(err)
+      try {
+        const path = files.file[0].path
+        const buffer = fs.readFileSync(path)
+        const type = await fileType.fromBuffer(buffer)
+        const timestamp = Date.now().toString()
+        const fileName = `bucketFolder/${timestamp}-lg`
+        const data = await uploadFile(buffer, fileName, type)
+        return res.status(200).send(data.Key)
+      } catch (err) {
+        next(err)
+      }
+    })
+  } else {
+    res.status(401).send('Not Found')
+  }
 })
